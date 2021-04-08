@@ -1,0 +1,12 @@
+node_modules
+
+#configuration
+config/dev.config.js
+
+#temp
+public
+views
+
+
+#packages
+package-lock.json
