@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* GET home page. */
 app.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'NurtureLabs' });
 });
 
 app.use('/advisor', advisorRouter);
