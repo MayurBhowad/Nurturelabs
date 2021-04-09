@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 var router = express.Router();
 
+//config
+const keys = require('../config/keys.config');
+
 //Model
 const User = require('../models/user.model');
 const Advisor = require('../models/advisor.model');
@@ -50,7 +53,7 @@ router.post('/register', (req, res) => {
             .then(user => {
               const payload = { id: user.id, userName: user.user_name, userEmail: user.user_email }
 
-              jwt.sign(payload, 'secret', { expiresIn: 3600 }, (err, token) => {
+              jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
                 res.json({
                   success: true,
                   id: user.id,
@@ -88,7 +91,7 @@ router.post('/login', (req, res) => {
 
             const payload = { id: user.id, username: user.user_name, email: user.user_email }
 
-            jwt.sign(payload, 'secret', { expiresIn: 3600 }, (err, token) => {
+            jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
               res.json({
                 success: true,
                 userId: user.id,
