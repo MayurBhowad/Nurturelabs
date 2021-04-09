@@ -147,7 +147,7 @@ router.post('/:user_id/advisor/:advisor_id', (req, res) => {
         return res.status(404).json({ message: 'please check user id!' })
       }
 
-      const booking = new Booking({ user_id, advisor: advisor_id, date, time })
+      const booking = new Booking({ user_id, advisor_id, date, time })
       booking.save()
         .then(bookData => res.status(200).json())
         .catch(err => console.log(err));
