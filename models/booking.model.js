@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema({
     user_id: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'users'
     },
-    advisor_id: {
-        type: String,
-        required: true
+    advisor: {
+        type: Schema.Types.ObjectId,
+        ref: 'advisors'
     },
     date: {
         type: Date,
