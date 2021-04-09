@@ -170,7 +170,7 @@ router.get('/:user_id/advisor/booking', (req, res) => {
         return res.status(400).json({ message: 'check user id!' })
       }
 
-      Booking.find()
+      Booking.find({ user_id })
         .populate('advisor', ['_id', 'advisor_name', 'advisor_photo'])
         .then(allBookings => {
           if (!allBookings) {
