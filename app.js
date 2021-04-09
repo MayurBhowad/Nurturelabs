@@ -24,6 +24,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* GET home page. */
+app.get('/', function (req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 app.use('/advisor', advisorRouter);
 app.use('/user', usersRouter);
 app.use('/admin', adminsRouter);
