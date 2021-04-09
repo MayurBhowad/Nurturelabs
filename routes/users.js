@@ -6,6 +6,7 @@ var router = express.Router();
 //Model
 const User = require('../models/user.model');
 const Advisor = require('../models/advisor.model');
+const Booking = require('../models/booking.model');
 
 //Validation
 const addNewUser = require('../validation/AddUser.validation');
@@ -103,7 +104,7 @@ router.post('/login', (req, res) => {
 })
 
 /**
- * acces    Public
+ * acces    Private
  * method   GET
  * route    /user/:userId/advisor
  * 
@@ -126,5 +127,57 @@ router.get('/:user_id/advisor', (req, res) => {
 
     })
 })
+
+
+/**
+ * acces    Private
+ * method   POST
+ * route    /user/:user_id/advisor/:advisor_id
+ */
+router.post('/:user_id/advisor/:advisor_id', (req, res) => {
+  const { user_id, advisor_id } = req.params;
+  const { date, time } = req.body;
+
+  User.findOne({ _id: user_id })
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({ message: 'please check user id!' })
+      }
+
+      const booking = new Booking({ user_id, advisor_id, date, time })
+      booking.save()
+        .then(bookData => res.status(200).json())
+        .catch(err => console.log(err));
+    })
+
+})
+
+
+/**
+ * acces    Private
+ * method   GET
+ * route    /user/:user_id/advisor/booking
+ */
+router.get('/:user_id/advisor/booking', (req, res) => {
+  const { user_id } = req.params;
+
+  User.findOne({ _id: user_id })
+    .then(user => {
+      if (!user) {
+        return res.status(400).json({ message: 'check user id!' })
+      }
+
+      Booking.find()
+        .then(allBookings => {
+          if (!allBookings) {
+            return res.status(404).json({ message: 'Bookings not found!' })
+          }
+
+          res.status(200).json(allBookings);
+        })
+    })
+})
+
+
 
 module.exports = router;
